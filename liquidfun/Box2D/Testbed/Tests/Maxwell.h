@@ -162,14 +162,29 @@ public:
 			else
 				bottom++;
 		}
+		// key help
+		{
+			static const char* k_keys[] = {
+				"Click inside or outside rects. Keys:",
+				"   (a)      toggle barrier",
+				"   (-) | (=) density increase | decrease",
+				"   (.) | (,) move up | down",
+				"   (;) | (\\) velocity decrease | increase",
+			};
+			for (uint32 i = 0; i < B2_ARRAY_SIZE(k_keys); ++i) {
+				m_debugDraw.DrawString(5, m_textLine, k_keys[i]);
+				m_textLine += DRAW_STRING_NEW_LINE;
+			}
 
-		// Calculate a score based upon the difference in pressure between the
-		// upper and lower divisions of the container.
-		const float32 topPressure = top / (k_containerHeight - m_position);
-		const float32 botPressure = bottom / m_position;
-		m_debugDraw.DrawString(
-			10, 75, "Score: %f",
-			topPressure > 0.0f ? botPressure / topPressure - 1.0f : 0.0f);
+
+			// Calculate a score based upon the difference in pressure between the
+			// upper and lower divisions of the container.
+			const float32 topPressure = top / (k_containerHeight - m_position);
+			const float32 botPressure = bottom / m_position;
+			m_debugDraw.DrawString(
+				10, m_textLine, "Score: %f",
+				topPressure > 0.0f ? botPressure / topPressure - 1.0f : 0.0f);
+		}
 	}
 
 	// Reset the particles and the barrier.
